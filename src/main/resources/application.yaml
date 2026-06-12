@@ -3,7 +3,7 @@ spring:
     name: jokes
 
 server:
-  port: 8070
+  port: ${PORT:8080}
 
 gemini:
   api:
