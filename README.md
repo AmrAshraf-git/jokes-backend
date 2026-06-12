@@ -22,6 +22,7 @@ GET /AmrAshraf/joke?word=مبرمج
 
 - Kotlin
 - Spring Boot 4
+- JDK 25
 - Clean Architecture
 - Gemini API
 - Docker
