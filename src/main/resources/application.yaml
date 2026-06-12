@@ -3,4 +3,9 @@ spring:
     name: jokes
 
 server:
-  port: 8070
+  port: ${PORT:8080}
+
+gemini:
+  api:
+    apiKey: ${GEMINI_API_KEY}
+    apiUrl: https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent

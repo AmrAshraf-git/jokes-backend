@@ -1,4 +1,4 @@
-package com.the_chance.jokes
+package com.thechance.jokes
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
