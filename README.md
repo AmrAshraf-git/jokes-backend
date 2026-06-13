@@ -1,3 +1,14 @@
+---
+title: Joke Backend API
+emoji: 😂
+colorFrom: blue
+colorTo: purple
+sdk: docker
+app_port: 8080
+pinned: false
+---
+
+
 # Jokes Backend
 
 Generates Egyptian Arabic jokes using Gemini Flash AI.
