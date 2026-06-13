@@ -2,6 +2,7 @@ package com.thechance.jokes.data.remote.gemini.repository
 
 import com.thechance.jokes.data.remote.gemini.GeminiClient
 import com.thechance.jokes.data.remote.gemini.helper.PromptBuilder
+import com.thechance.jokes.domain.exception.JokeException
 import com.thechance.jokes.domain.exception.JokeGenerationException
 import com.thechance.jokes.domain.model.Joke
 import com.thechance.jokes.domain.model.JokeCommand
@@ -25,7 +26,7 @@ class JokeGeneratorRepositoryImpl(
                 dialect = jokeCommand.dialect
             )
         }
-        catch (e: JokeGenerationException) { throw e }
+        catch (e: JokeException) { throw e }
         catch (e: Exception){
             throw JokeGenerationException("Failed to generate joke, please try again!")
         }

@@ -7,3 +7,5 @@ class InvalidWordException(message: String) : JokeException(message)
 class JokeGenerationException(message: String) : JokeException(message)
 
 class EmptyResponseException(message: String) : JokeException(message)
+
+class RateLimitException(message: String) : JokeException(message)

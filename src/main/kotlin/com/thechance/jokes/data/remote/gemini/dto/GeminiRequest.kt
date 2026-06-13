@@ -17,5 +17,4 @@ data class GenerationConfigDto(
     //val topP: Float = 0.95f,
     //val topK: Int = 64,
     //val maxOutputTokens: Int = 1000
-) {
-}
+)

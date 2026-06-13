@@ -2,6 +2,7 @@ package com.thechance.jokes.presentation.exception
 import com.thechance.jokes.domain.exception.EmptyResponseException
 import com.thechance.jokes.domain.exception.InvalidWordException
 import com.thechance.jokes.domain.exception.JokeGenerationException
+import com.thechance.jokes.domain.exception.RateLimitException
 import com.thechance.jokes.presentation.dto.ApiResponse
 import com.thechance.jokes.presentation.dto.ErrorResponse
 import org.springframework.http.HttpStatus
@@ -55,6 +56,19 @@ class GlobalExceptionHandler {
         )
     }
 
+    @ExceptionHandler(RateLimitException::class)
+    @ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
+    fun handleRateLimit(ex: RateLimitException): ApiResponse<ErrorResponse> {
+        return ApiResponse(
+            status = "error",
+            code = HttpStatus.TOO_MANY_REQUESTS.value(),
+            data = ErrorResponse(
+                error = "RATE_LIMIT_EXCEEDED",
+                message = ex.message ?: "Too many requests, slow down!"
+            )
+        )
+    }
+
     // ── Spring Exceptions ──────────────────────────────────────
 
     @ExceptionHandler(MissingServletRequestParameterException::class)
@@ -97,4 +111,5 @@ class GlobalExceptionHandler {
             )
         )
     }
+
 }
