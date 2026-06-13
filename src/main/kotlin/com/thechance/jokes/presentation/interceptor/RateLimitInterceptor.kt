@@ -22,9 +22,9 @@ class RateLimitInterceptor(
         val bucket = rateLimiterConfig.resolveBucket(ipAddress)
         val probe = bucket.tryConsumeAndReturnRemaining(1)
 
-        println("IP: $ipAddress")
-        println("Consumed: ${probe.isConsumed}")
-        println("Remaining: ${probe.remainingTokens}")
+//        println("IP: $ipAddress")
+//        println("Consumed: ${probe.isConsumed}")
+//        println("Remaining: ${probe.remainingTokens}")
 
         if (probe.isConsumed) {
             response.addHeader(

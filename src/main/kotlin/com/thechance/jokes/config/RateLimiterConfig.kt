@@ -11,15 +11,16 @@ class RateLimiterConfig {
     private val buckets = ConcurrentHashMap<String, Bucket>()
 
     fun resolveBucket(ipAddress: String): Bucket {
-        println("Map size: ${buckets.size}")
-        println("IP: $ipAddress")
+//        println("Map size: ${buckets.size}")
+//        println("IP: $ipAddress")
         return buckets.getOrPut(ipAddress) { createNewBucket() }
     }
 
     private fun createNewBucket(): Bucket {
         val limit = Bandwidth.builder()
             .capacity(10)
-            .refillGreedy(10, Duration.ofMinutes(1))
+            //.refillGreedy(10, Duration.ofMinutes(1))
+            .refillIntervally(10, Duration.ofMinutes(1))
             .build()
 
         return Bucket.builder()
