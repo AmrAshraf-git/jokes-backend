@@ -6,6 +6,7 @@ import com.thechance.jokes.data.remote.gemini.dto.GeminiRequest
 import com.thechance.jokes.data.remote.gemini.dto.GeminiResponse
 import com.thechance.jokes.data.remote.gemini.dto.GenerationConfigDto
 import com.thechance.jokes.data.remote.gemini.dto.PartDto
+import com.thechance.jokes.domain.exception.EmptyResponseException
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestClient
@@ -48,6 +49,6 @@ class GeminiClient(
             ?.firstOrNull()
             ?.text
             ?.trim()
-            ?: throw RuntimeException("Empty response from Gemini API")
+            ?: throw EmptyResponseException("Empty response from Gemini API")
     }
 }

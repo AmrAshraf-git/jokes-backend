@@ -2,6 +2,7 @@ package com.thechance.jokes.data.remote.gemini.repository
 
 import com.thechance.jokes.data.remote.gemini.GeminiClient
 import com.thechance.jokes.data.remote.gemini.helper.PromptBuilder
+import com.thechance.jokes.domain.exception.JokeGenerationException
 import com.thechance.jokes.domain.model.Joke
 import com.thechance.jokes.domain.model.JokeCommand
 import com.thechance.jokes.domain.repository.JokeGeneratorRepository
@@ -14,13 +15,19 @@ class JokeGeneratorRepositoryImpl(
 ) : JokeGeneratorRepository {
 
     override fun generateJoke(jokeCommand: JokeCommand): Joke {
-        val prompt = promptBuilder.build(jokeCommand)
-        val content = geminiApiClient.generate(prompt)
-        return Joke(
-            word = jokeCommand.word,
-            content = content,
-            requestId = jokeCommand.seed,
-            dialect = jokeCommand.dialect
-        )
+        return try {
+            val prompt = promptBuilder.build(jokeCommand)
+            val content = geminiApiClient.generate(prompt)
+            Joke(
+                word = jokeCommand.word,
+                content = content,
+                requestId = jokeCommand.seed,
+                dialect = jokeCommand.dialect
+            )
+        }
+        catch (e: JokeGenerationException) { throw e }
+        catch (e: Exception){
+            throw JokeGenerationException("Failed to generate joke, please try again!")
+        }
     }
 }

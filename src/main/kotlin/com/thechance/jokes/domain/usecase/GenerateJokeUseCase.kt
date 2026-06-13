@@ -1,5 +1,6 @@
 package com.thechance.jokes.domain.usecase
 
+import com.thechance.jokes.domain.exception.InvalidWordException
 import com.thechance.jokes.domain.model.Joke
 import com.thechance.jokes.domain.model.JokeCommand
 import com.thechance.jokes.domain.repository.JokeGeneratorRepository
@@ -40,17 +41,54 @@ class GenerateJokeUseCase(
         return jokeRepository.generateJoke(jokeCommand)
     }
 
+//    private fun validateWord(word: String): String {
+//        return when {
+//            word.isBlank() -> throw IllegalArgumentException(
+//                "Word cannot be empty"
+//            )
+//
+//            word.length > 50 -> throw IllegalArgumentException(
+//                "Word is too long, max 50 characters"
+//            )
+//
+//            else -> word.trim()
+//        }
+//    }
+
     private fun validateWord(word: String): String {
-        return when {
-            word.isBlank() -> throw IllegalArgumentException(
-                "Word cannot be empty"
-            )
+        val validWordPattern = Regex("^[a-zA-Z\\u0600-\\u06FF]+$")
+        val trimmed = word.trim()
 
-            word.length > 50 -> throw IllegalArgumentException(
-                "Word is too long, max 50 characters"
+        if (trimmed.isBlank()) {
+            throw InvalidWordException(
+                "Word cannot be empty!"
             )
-
-            else -> word.trim()
         }
+
+        if (trimmed.length < 2) {
+            throw InvalidWordException(
+                "Word is too short!"
+            )
+        }
+
+        if (trimmed.length > 50) {
+            throw InvalidWordException(
+                "Word is too long!, max 50 characters!"
+            )
+        }
+
+        if (trimmed.all { it.isDigit() }) {
+            throw InvalidWordException(
+                "Numbers are not allowed!"
+            )
+        }
+
+        if (!trimmed.matches(validWordPattern)) {
+            throw InvalidWordException(
+                "Only Arabic or English letters are allowed!"
+            )
+        }
+
+        return trimmed
     }
 }
